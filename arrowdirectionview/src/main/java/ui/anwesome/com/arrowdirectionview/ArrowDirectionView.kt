@@ -72,4 +72,37 @@ class ArrowDirectionView(ctx : Context) : View(ctx) {
             }
         }
     }
+    data class ArrowDirection(var i : Int, val state : State = State()) {
+        fun draw(canvas : Canvas, paint : Paint) {
+            val w = canvas.width.toFloat()
+            val h = canvas.height.toFloat()
+            val size = Math.min(w, h)/15
+            val l = Math.min(w, h)/5
+            canvas.save()
+            canvas.translate(w / 2, h / 2)
+            paint.color = Color.WHITE
+            for(i in 0..3) {
+                canvas.save()
+                canvas.rotate(90f * i * state.scales[0])
+                canvas.translate(0f , -l * state.scales[1])
+                canvas.drawTriangle(size, paint)
+                canvas.restore()
+            }
+            canvas.drawPath(path, paint)
+            canvas.restore()
+        }
+        fun update(stopcb : () -> Unit) {
+            state.update(stopcb)
+        }
+        fun startUpdating(startcb : () -> Unit) {
+            state.startUpdating(startcb)
+        }
+    }
+}
+fun Canvas.drawTriangle(size : Float, paint : Paint) {
+    val path = Path()
+    path.moveTo(-size / 2, size / 2 )
+    path.lineTo(size / 2, size / 2)
+    path.lineTo(0f, -size / 2)
+    drawPath(path, paint)
 }
