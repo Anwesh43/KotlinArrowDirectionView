@@ -3,6 +3,7 @@ package ui.anwesome.com.arrowdirectionview
 /**
  * Created by anweshmishra on 27/02/18.
  */
+import android.app.Activity
 import android.view.*
 import android.content.*
 import android.graphics.*
@@ -114,6 +115,13 @@ class ArrowDirectionView(ctx : Context) : View(ctx) {
             arrowDirection.startUpdating {
                 animator.start()
             }
+        }
+    }
+    companion object {
+        fun create(activity : Activity) : ArrowDirectionView {
+            val view = ArrowDirectionView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 }
