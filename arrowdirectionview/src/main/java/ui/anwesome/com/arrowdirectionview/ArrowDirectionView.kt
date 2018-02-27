@@ -98,6 +98,24 @@ class ArrowDirectionView(ctx : Context) : View(ctx) {
             state.startUpdating(startcb)
         }
     }
+    data class Renderer(var view : ArrowDirectionView) {
+        val arrowDirection : ArrowDirection = ArrowDirection(0)
+        val animator : Animator = Animator(view)
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#212121"))
+            arrowDirection.draw(canvas, paint)
+            animator.animate {
+                arrowDirection.update {
+                    animator.stop()
+                }
+            }
+        }
+        fun handleTap() {
+            arrowDirection.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
 fun Canvas.drawTriangle(size : Float, paint : Paint) {
     val path = Path()
