@@ -98,9 +98,13 @@ class ArrowDirectionView(ctx : Context) : View(ctx) {
         fun startUpdating(startcb : () -> Unit) {
             state.startUpdating(startcb)
         }
+        companion object {
+            var i:Int = 0
+            fun newInstance() : ArrowDirection = ArrowDirection(i++)
+        }
     }
     data class Renderer(var view : ArrowDirectionView) {
-        val arrowDirection : ArrowDirection = ArrowDirection(0)
+        val arrowDirection : ArrowDirection = ArrowDirection.newInstance()
         val animator : Animator = Animator(view)
         fun render(canvas : Canvas, paint : Paint) {
             canvas.drawColor(Color.parseColor("#212121"))
