@@ -87,7 +87,7 @@ class ArrowDirectionView(ctx : Context) : View(ctx) {
                 canvas.save()
                 canvas.rotate(90f * i * state.scales[0])
                 canvas.translate(0f , -l * state.scales[1])
-                canvas.drawTriangle(size, paint)
+                canvas.drawTriangle(size / 2 ,size, paint)
                 canvas.restore()
             }
             canvas.restore()
@@ -125,10 +125,10 @@ class ArrowDirectionView(ctx : Context) : View(ctx) {
         }
     }
 }
-fun Canvas.drawTriangle(size : Float, paint : Paint) {
+fun Canvas.drawTriangle(yOffset : Float, size : Float, paint : Paint) {
     val path = Path()
-    path.moveTo(-size / 2, size / 2)
-    path.lineTo(size / 2, size / 2)
-    path.lineTo(0f, -size / 2)
+    path.moveTo(-size / 2, size / 2 - yOffset)
+    path.lineTo(size / 2, size / 2 - yOffset)
+    path.lineTo(0f, -size / 2 - yOffset)
     drawPath(path, paint)
 }
