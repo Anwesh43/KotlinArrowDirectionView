@@ -7,14 +7,15 @@ import android.view.*
 import android.content.*
 import android.graphics.*
 class ArrowDirectionView(ctx : Context) : View(ctx) {
-    val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    val renderer : Renderer = Renderer(this)
     override fun onDraw(canvas : Canvas) {
-
+        renderer.render(canvas, paint)
     }
     override fun onTouchEvent(event : MotionEvent) : Boolean {
         when(event.action) {
             MotionEvent.ACTION_DOWN -> {
-
+                renderer.handleTap()
             }
         }
         return true
@@ -88,7 +89,6 @@ class ArrowDirectionView(ctx : Context) : View(ctx) {
                 canvas.drawTriangle(size, paint)
                 canvas.restore()
             }
-            canvas.drawPath(path, paint)
             canvas.restore()
         }
         fun update(stopcb : () -> Unit) {
@@ -119,7 +119,7 @@ class ArrowDirectionView(ctx : Context) : View(ctx) {
 }
 fun Canvas.drawTriangle(size : Float, paint : Paint) {
     val path = Path()
-    path.moveTo(-size / 2, size / 2 )
+    path.moveTo(-size / 2, size / 2)
     path.lineTo(size / 2, size / 2)
     path.lineTo(0f, -size / 2)
     drawPath(path, paint)
